@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.globals": [
+        "LOC",
+        "_PLUGIN",
+        "MAC_ENV"
+    ]
+}
