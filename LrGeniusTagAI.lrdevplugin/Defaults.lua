@@ -38,19 +38,16 @@ Defaults.targetDataFields = {
 }
 
 local aiModels = {
-    { title = "Google Gemini Flash 2.0", value = "gemini-2.0-flash" },
-    { title = "Google Gemini Flash 2.5", value = "gemini-2.5-flash" },
-    { title = "Google Gemini Flash 2.0 Lite", value = "gemini-2.0-flash-lite" },
     { title = "Google Gemini Flash 2.5 Lite", value = "gemini-2.5-flash-lite" },
+    { title = "Google Gemini Flash 2.5", value = "gemini-2.5-flash" },
     { title = "Google Gemini Pro 2.5", value = "gemini-2.5-pro" },
-    { title = "Google Gemini Pro 3", value = "gemini-3-pro" },
-    { title = "ChatGPT 4.1", value = "gpt-4.1" },
-    { title = "ChatGPT 4.1 Mini", value = "gpt-4.1-mini" },
-    { title = "ChatGPT 4.1 Nano", value = "gpt-4.1-nano" },
-    { title = "ChatGPT 5", value = "gpt-5" },
-    { title = "ChatGPT 5 Mini", value = "gpt-5-mini" },
-    { title = "ChatGPT 5 Nano", value = "gpt-5-nano" },
-    { title = "ChatGPT 5.1", value = "gpt-5.1" },
+    { title = "Google Gemini Flash 3.1 Lite", value = "gemini-3.1-flash-lite" },
+    { title = "Google Gemini Flash 3.5", value = "gemini-3.5-flash" },
+    { title = "Google Gemini Pro 3.1", value = "gemini-3.1-pro-preview" },
+    { title = "ChatGPT 5.4 Nano", value = "gpt-5.4-nano" },
+    { title = "ChatGPT 5.4 Mini", value = "gpt-5.4-mini" },
+    { title = "ChatGPT 5.4", value = "gpt-5.4" },
+    { title = "ChatGPT 5.5", value = "gpt-5.5" },
 }
 
 function Defaults.getAvailableAiModels()
@@ -84,26 +81,18 @@ Defaults.exportSizes = {
 }
 
 Defaults.baseUrls = {}
-Defaults.baseUrls['gemini-2.0-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='
-Defaults.baseUrls['gemini-2.0-flash-lite'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:generateContent?key='
 Defaults.baseUrls['gemini-2.5-flash-lite'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key='
 Defaults.baseUrls['gemini-2.5-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key='
 Defaults.baseUrls['gemini-2.5-pro'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key='
-Defaults.baseUrls['gemini-3-pro'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key='
+Defaults.baseUrls['gemini-3.1-flash-lite'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key='
+Defaults.baseUrls['gemini-3.5-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key='
+Defaults.baseUrls['gemini-3.1-pro-preview'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key='
 
 
-Defaults.baseUrls['gpt-4o'] = 'https://api.openai.com/v1/chat/completions'
-Defaults.baseUrls['gpt-4o-mini'] = 'https://api.openai.com/v1/chat/completions'
-
-Defaults.baseUrls['gpt-4.1'] = 'https://api.openai.com/v1/chat/completions'
-Defaults.baseUrls['gpt-4.1-mini'] = 'https://api.openai.com/v1/chat/completions'
-Defaults.baseUrls['gpt-4.1-nano'] = 'https://api.openai.com/v1/chat/completions'
-
-Defaults.baseUrls['gpt-5'] = 'https://api.openai.com/v1/chat/completions'
-Defaults.baseUrls['gpt-5-mini'] = 'https://api.openai.com/v1/chat/completions'
-Defaults.baseUrls['gpt-5-nano'] = 'https://api.openai.com/v1/chat/completions'
-
-Defaults.baseUrls['gpt-5.1'] = 'https://api.openai.com/v1/chat/completions'
+Defaults.baseUrls['gpt-5.4-nano'] = 'https://api.openai.com/v1/chat/completions'
+Defaults.baseUrls['gpt-5.4-mini'] = 'https://api.openai.com/v1/chat/completions'
+Defaults.baseUrls['gpt-5.4'] = 'https://api.openai.com/v1/chat/completions'
+Defaults.baseUrls['gpt-5.5'] = 'https://api.openai.com/v1/chat/completions'
 
 Defaults.baseUrls['lmstudio'] = 'http://localhost:1234'
 Defaults.lmStudioOpenAiChatUrl = '/v1/chat/completions'
@@ -117,57 +106,40 @@ Defaults.ollamaListModelUrl = '/api/tags'
 Defaults.ollamaModelInfoUrl = '/api/show'
 
 Defaults.pricing = {}
-Defaults.pricing["gemini-3-pro"] = {}
-Defaults.pricing["gemini-3-pro"].input = 2 / 1000000
-Defaults.pricing["gemini-3-pro"].output= 12 / 1000000
 Defaults.pricing["gemini-2.5-pro"] = {}
 Defaults.pricing["gemini-2.5-pro"].input = 1.25 / 1000000
 Defaults.pricing["gemini-2.5-pro"].output= 10 / 1000000
-Defaults.pricing["gemini-2.0-flash"] = {}
-Defaults.pricing["gemini-2.0-flash"].input = 0.1 / 1000000
-Defaults.pricing["gemini-2.0-flash"].output= 0.4 / 1000000
 Defaults.pricing["gemini-2.5-flash"] = {}
 Defaults.pricing["gemini-2.5-flash"].input = 0.30 / 1000000
 Defaults.pricing["gemini-2.5-flash"].output= 2.5 / 1000000
 Defaults.pricing["gemini-2.5-flash-lite"] = {}
 Defaults.pricing["gemini-2.5-flash-lite"].input = 0.1 / 1000000
 Defaults.pricing["gemini-2.5-flash-lite"].output= 0.4 / 1000000
-Defaults.pricing["gemini-2.0-flash-lite"] = {}
-Defaults.pricing["gemini-2.0-flash-lite"].input = 0.075 / 1000000
-Defaults.pricing["gemini-2.0-flash-lite"].output= 0.3 / 1000000
-Defaults.pricing["gpt-4o"] = {}
-Defaults.pricing["gpt-4o"].input = 2.5 / 1000000
-Defaults.pricing["gpt-4o"].output= 10 / 1000000
-Defaults.pricing["gpt-4o-mini"] = {}
-Defaults.pricing["gpt-4o-mini"].input = 0.15 / 1000000
-Defaults.pricing["gpt-4o-mini"].output= 0.6 / 1000000
 
-Defaults.pricing["gpt-4.1"] = {}
-Defaults.pricing["gpt-4.1"].input = 2 / 1000000
-Defaults.pricing["gpt-4.1"].output= 8 / 1000000
-Defaults.pricing["gpt-4.1-mini"] = {}
-Defaults.pricing["gpt-4.1-mini"].input = 0.4 / 1000000
-Defaults.pricing["gpt-4.1-mini"].output= 1.6 / 1000000
-Defaults.pricing["gpt-4.1-nano"] = {}
-Defaults.pricing["gpt-4.1-nano"].input = 0.1 / 1000000
-Defaults.pricing["gpt-4.1-nano"].output= 0.4 / 1000000
+Defaults.pricing["gemini-3.1-pro-preview"] = {}
+Defaults.pricing["gemini-3.1-pro-preview"].input = 2 / 1000000
+Defaults.pricing["gemini-3.1-pro-preview"].output= 12 / 1000000
+Defaults.pricing["gemini-3.5-flash"] = {}
+Defaults.pricing["gemini-3.5-flash"].input = 1.5 / 1000000
+Defaults.pricing["gemini-3.5-flash"].output= 9 / 1000000
+Defaults.pricing["gemini-3.1-flash-lite"] = {}
+Defaults.pricing["gemini-3.1-flash-lite"].input = 0.25 / 1000000
+Defaults.pricing["gemini-3.1-flash-lite"].output= 1.5 / 1000000
 
-Defaults.pricing["gpt-5"] = {}
-Defaults.pricing["gpt-5"].input = 1.25 / 1000000
-Defaults.pricing["gpt-5"].output= 10 / 1000000
-Defaults.pricing["gpt-5-mini"] = {}
-Defaults.pricing["gpt-5-mini"].input = 0.25 / 1000000
-Defaults.pricing["gpt-5-mini"].output= 2.0 / 1000000
-Defaults.pricing["gpt-5-nano"] = {}
-Defaults.pricing["gpt-5-nano"].input = 0.05 / 1000000
-Defaults.pricing["gpt-5-nano"].output= 0.4 / 1000000
+Defaults.pricing["gpt-5.5"] = {}
+Defaults.pricing["gpt-5.5"].input = 5 / 1000000
+Defaults.pricing["gpt-5.5"].output= 30 / 1000000
+Defaults.pricing["gpt-5.4"] = {}
+Defaults.pricing["gpt-5.4"].input = 2.5 / 1000000
+Defaults.pricing["gpt-5.4"].output= 15 / 1000000
+Defaults.pricing["gpt-5.4-mini"] = {}
+Defaults.pricing["gpt-5.4-mini"].input = 0.75 / 1000000
+Defaults.pricing["gpt-5.4-mini"].output= 4.5 / 1000000
+Defaults.pricing["gpt-5.4-nano"] = {}
+Defaults.pricing["gpt-5.4-nano"].input = 0.2 / 1000000
+Defaults.pricing["gpt-5.4-nano"].output= 1.25 / 1000000
 
-
-Defaults.pricing["gpt-5.1"] = {}
-Defaults.pricing["gpt-5.1"].input = 1.25 / 1000000
-Defaults.pricing["gpt-5.1"].output= 10 / 1000000
-
-Defaults.defaultAiModel = "gpt-4.1-nano"
+Defaults.defaultAiModel = "gemini-3.1-flash-lite"
 
 Defaults.defaultExportSize = "2048"
 Defaults.defaultExportQuality = 50
