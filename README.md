@@ -1,5 +1,7 @@
 # LrGeniusTagAI
 
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7X2240HF4)
+
 A Lightroom Classic plugin that uses AI vision models to automatically generate
 **titles, captions, alt text, and keywords** for your photos — directly inside
 Lightroom, on the Library grid or during export.
