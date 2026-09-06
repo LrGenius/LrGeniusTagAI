@@ -30,7 +30,44 @@ function AnalyzeImageProvider.addKeywordRecursively(photo, keywordSubTable, pare
 end
 
 
-function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText)
+-- Renders a small temporary JPEG of the photo for use in f:picture (which shows images at native size).
+-- Returns success, path. Caller must delete the file after the dialog closes.
+function AnalyzeImageProvider.renderPreview(photo, longEdge)
+    local exportSettings = {
+        LR_export_destinationType = 'specificFolder',
+        LR_export_destinationPathPrefix = LrPathUtils.getStandardFilePath('temp'),
+        LR_export_useSubfolder = false,
+        LR_format = 'JPEG',
+        LR_jpeg_quality = 60,
+        LR_minimizeEmbeddedMetadata = true,
+        LR_outputSharpeningOn = false,
+        LR_size_doConstrain = true,
+        LR_size_maxHeight = longEdge,
+        LR_size_resizeType = 'longEdge',
+        LR_size_units = 'pixels',
+        LR_collisionHandling = 'rename',
+        LR_includeVideoFiles = false,
+        LR_removeLocationMetadata = true,
+        LR_embeddedMetadataOption = "copyrightOnly",
+    }
+
+    local exportSession = LrExportSession({
+        photosToExport = { photo },
+        exportSettings = exportSettings
+    })
+
+    for _, rendition in exportSession:renditions() do
+        local success, path = rendition:waitForRender()
+        if success then
+            return true, path
+        end
+        log:error("Preview rendering failed: " .. tostring(path))
+    end
+    return false, ""
+end
+
+-- photo is optional; when given, a preview is shown left of the result fields.
+function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText, photo)
     local f = LrView.osFactory()
     local bind = LrView.bind
     local share = LrView.share
@@ -75,8 +112,29 @@ function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption
         table.insert(keywordRows, f:row(row))
     end
 
-    local dialogView = f:column {
-        bind_to_object = propertyTable,
+    -- Preview of the photo, shown left of the result fields.
+    local previewPath = ""
+    local previewRendered = false
+    local previewColumn = nil
+    if photo ~= nil then
+        previewRendered, previewPath = AnalyzeImageProvider.renderPreview(photo, 400)
+        if previewRendered then
+            previewColumn = f:column {
+                spacing = f:control_spacing(),
+                f:picture {
+                    value = previewPath,
+                    frame_width = 0,
+                },
+                f:static_text {
+                    title = photo:getFormattedMetadata('fileName'),
+                    alignment = 'center',
+                    size = 'small',
+                },
+            }
+        end
+    end
+
+    local resultFields = f:column {
         f:row {
             margin_vertical = 10,
             f:checkbox {
@@ -152,6 +210,21 @@ function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption
         },
     }
 
+    local dialogView
+    if previewColumn ~= nil then
+        dialogView = f:row {
+            bind_to_object = propertyTable,
+            spacing = f:dialog_spacing(),
+            previewColumn,
+            resultFields,
+        }
+    else
+        dialogView = f:column {
+            bind_to_object = propertyTable,
+            resultFields,
+        }
+    end
+
     -- Buttons: OK saves the (edited) results, "Skip" leaves this photo untouched and
     -- continues with the next one (result == "other"), Cancel aborts the whole batch.
     local result = LrDialogs.presentModalDialog({
@@ -159,6 +232,8 @@ function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption
         otherVerb = LOC "$$$/lrc-ai-assistant/AnalyzeImageTask/SkipPhoto=Skip",
         contents = dialogView,
     })
+
+    if previewRendered then LrFileUtils.delete(previewPath) end
 
     local validatedKeywords = {}
     if propertyTable.saveKeywords then
@@ -292,39 +367,7 @@ function AnalyzeImageProvider.showPhotoContextDialog(photo)
     end
     propertyTable.photoContextData = PhotoContextData
 
-    local tempDir = LrPathUtils.getStandardFilePath('temp')
-    local exportSettings = {
-        LR_export_destinationType = 'specificFolder',
-        LR_export_destinationPathPrefix = tempDir,
-        LR_export_useSubfolder = false,
-        LR_format = 'JPEG',
-        LR_jpeg_quality = 60,
-        LR_minimizeEmbeddedMetadata = true,
-        LR_outputSharpeningOn = false,
-        LR_size_doConstrain = true,
-        LR_size_maxHeight = 460,
-        LR_size_resizeType = 'longEdge',
-        LR_size_units = 'pixels',
-        LR_collisionHandling = 'rename',
-        LR_includeVideoFiles = false,
-        LR_removeLocationMetadata = true,
-        LR_embeddedMetadataOption = "copyrightOnly",
-    }
-
-    local exportSession = LrExportSession({
-        photosToExport = { photo },
-        exportSettings = exportSettings
-    })
-
-    local photoPath = ""
-    local renderSuccess = false
-    for _, rendition in exportSession:renditions() do
-        local success, path = rendition:waitForRender()
-        if success then
-            photoPath = path
-            renderSuccess = success
-        end
-    end
+    local renderSuccess, photoPath = AnalyzeImageProvider.renderPreview(photo, 460)
 
     local dialogView = f:column {
         bind_to_object = propertyTable,

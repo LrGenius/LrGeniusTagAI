@@ -108,7 +108,7 @@ local function exportAndAnalyzePhoto(photo, ctx, progressScope)
                     saveTitle, title,
                     saveCaption, caption,
                     saveAltText, altText,
-                    SkipReview = AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText)
+                    SkipReview = AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText, photo)
 
                 if validationResult == "ok" then
                     log:trace("User confirmed AI results.")
