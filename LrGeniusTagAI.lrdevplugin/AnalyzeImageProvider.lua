@@ -152,9 +152,11 @@ function AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption
         },
     }
 
+    -- Buttons: OK saves the (edited) results, "Skip" leaves this photo untouched and
+    -- continues with the next one (result == "other"), Cancel aborts the whole batch.
     local result = LrDialogs.presentModalDialog({
         title = LOC "$$$/lrc-ai-assistant/AnalyzeImageTask/ReviewWindowTitle=Review results",
-        -- otherVerb = LOC "$$$/lrc-ai-assistant/AnalyzeImageTask/discard=Discard",
+        otherVerb = LOC "$$$/lrc-ai-assistant/AnalyzeImageTask/SkipPhoto=Skip",
         contents = dialogView,
     })
 
