@@ -177,6 +177,10 @@ if _G.prefs.periodicalUpdateCheck == nil then
     _G.prefs.periodicalUpdateCheck = false
 end
 
+if _G.prefs.onlyReportNewVersions == nil then
+    _G.prefs.onlyReportNewVersions = false
+end
+
 if _G.prefs.submitFolderName == nil then
     _G.prefs.submitFolderName = false
 end
@@ -187,7 +191,8 @@ end
 
 if prefs.periodicalUpdateCheck then
     LrTasks.startAsyncTask(function()
-        -- Check for updates in the background
-        UpdateCheck.checkForNewVersionInBackground()
+        -- Check for updates in the background.
+        -- If "Only report new versions" is enabled, stay silent when already up to date.
+        UpdateCheck.checkForNewVersionInBackground(prefs.onlyReportNewVersions)
     end)
 end

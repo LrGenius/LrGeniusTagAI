@@ -92,6 +92,7 @@
 "$$$/lrc-ai-assistant/PluginInfoDialogSections/enableDebugLogging=Aktiviere Log-Dateien"
 "$$$/lrc-ai-assistant/PluginInfoDialogSections/enablePerfLogging=Aktiviere Leistungs Log-Dateien"
 "$$$/lrc-ai-assistant/PluginInfoDialogSections/periodUpdateCheck=Periodisch nach Updates suchen"
+"$$$/lrc-ai-assistant/PluginInfoDialogSections/onlyReportNewVersions=Nur neue Versionen melden"
 "$$$/lrc-ai-assistant/PluginInfoDialogSections/folderNames=Ordnernamen"
 "$$$/lrc-ai-assistant/AnalyzeImageTask/aiBehavior=KI Verhalten"
 "$$$/lrc-ai-assistant/AnalyzeImageTask/beCoherent=Kohärent"

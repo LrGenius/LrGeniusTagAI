@@ -61,6 +61,7 @@ function PluginInfoDialogSections.startDialog(propertyTable)
     propertyTable.licenseKey = prefs.licenseKey
 
     propertyTable.periodicalUpdateCheck = prefs.periodicalUpdateCheck
+    propertyTable.onlyReportNewVersions = prefs.onlyReportNewVersions
 
     propertyTable.submitFolderName = prefs.submitFolderName
 
@@ -122,6 +123,17 @@ function PluginInfoDialogSections.sectionsForBottomOfDialog(f, propertyTable)
                 f:static_text {
                     title = LOC "$$$/lrc-ai-assistant/PluginInfoDialogSections/periodUpdateCheck=Periodically check for Updates",
                     alignment = 'right',
+                },
+            },
+            f:row {
+                f:checkbox {
+                    value = bind 'onlyReportNewVersions',
+                    enabled = bind 'periodicalUpdateCheck',
+                },
+                f:static_text {
+                    title = LOC "$$$/lrc-ai-assistant/PluginInfoDialogSections/onlyReportNewVersions=Only report new versions",
+                    alignment = 'right',
+                    enabled = bind 'periodicalUpdateCheck',
                 },
             },
             f:row {
@@ -524,6 +536,7 @@ function PluginInfoDialogSections.endDialog(propertyTable)
     prefs.perfLogging = propertyTable.perfLogging
 
     prefs.periodicalUpdateCheck = propertyTable.periodicalUpdateCheck
+    prefs.onlyReportNewVersions = propertyTable.onlyReportNewVersions
 
     prefs.submitFolderName = propertyTable.submitFolderName
 
