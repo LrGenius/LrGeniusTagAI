@@ -43,6 +43,9 @@ local aiModels = {
     { title = "Google Gemini Pro 2.5", value = "gemini-2.5-pro" },
     { title = "Google Gemini Flash 3.1 Lite", value = "gemini-3.1-flash-lite" },
     { title = "Google Gemini Flash 3.5", value = "gemini-3.5-flash" },
+    { title = "Google Gemini Flash 3.6", value = "gemini-3.6-flash" },
+    { title = "Google Gemini Flash 3.7", value = "gemini-3.7-flash" },
+    { title = "Google Gemini Flash 3.8", value = "gemini-3.8-flash" },
     { title = "Google Gemini Pro 3.1", value = "gemini-3.1-pro-preview" },
     { title = "ChatGPT 5.4 Nano", value = "gpt-5.4-nano" },
     { title = "ChatGPT 5.4 Mini", value = "gpt-5.4-mini" },
@@ -86,6 +89,9 @@ Defaults.baseUrls['gemini-2.5-flash'] = 'https://generativelanguage.googleapis.c
 Defaults.baseUrls['gemini-2.5-pro'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key='
 Defaults.baseUrls['gemini-3.1-flash-lite'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key='
 Defaults.baseUrls['gemini-3.5-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key='
+Defaults.baseUrls['gemini-3.6-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key='
+Defaults.baseUrls['gemini-3.7-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.7-flash:generateContent?key='
+Defaults.baseUrls['gemini-3.8-flash'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key='
 Defaults.baseUrls['gemini-3.1-pro-preview'] = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key='
 
 
@@ -125,6 +131,17 @@ Defaults.pricing["gemini-3.5-flash"].output= 9 / 1000000
 Defaults.pricing["gemini-3.1-flash-lite"] = {}
 Defaults.pricing["gemini-3.1-flash-lite"].input = 0.25 / 1000000
 Defaults.pricing["gemini-3.1-flash-lite"].output= 1.5 / 1000000
+-- Gemini 3.6/3.7/3.8 Flash: launch pricing valid through 2026-12-31 (source: ai.google.dev/gemini-api/docs/pricing).
+-- From 2027-01-01 Google lists 1.50 input / 7.50 output per 1M tokens.
+Defaults.pricing["gemini-3.6-flash"] = {}
+Defaults.pricing["gemini-3.6-flash"].input = 0.75 / 1000000
+Defaults.pricing["gemini-3.6-flash"].output= 3.75 / 1000000
+Defaults.pricing["gemini-3.7-flash"] = {}
+Defaults.pricing["gemini-3.7-flash"].input = 0.75 / 1000000
+Defaults.pricing["gemini-3.7-flash"].output= 3.75 / 1000000
+Defaults.pricing["gemini-3.8-flash"] = {}
+Defaults.pricing["gemini-3.8-flash"].input = 0.75 / 1000000
+Defaults.pricing["gemini-3.8-flash"].output= 3.75 / 1000000
 
 Defaults.pricing["gpt-5.5"] = {}
 Defaults.pricing["gpt-5.5"].input = 5 / 1000000
