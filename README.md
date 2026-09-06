@@ -1,3 +1,9 @@
+This is a Developement-Fork of a Lightroom Classic plugin that uses LLMs to generate tags and describe images. 
+
+**Please use https://github.com/LrGenius/LrGeniusTagAI for Downloads.**
+
+---
+
 # LrGeniusTagAI
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7X2240HF4)
