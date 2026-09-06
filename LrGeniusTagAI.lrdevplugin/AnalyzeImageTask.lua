@@ -108,10 +108,15 @@ local function exportAndAnalyzePhoto(photo, ctx, progressScope)
                     saveTitle, title,
                     saveCaption, caption,
                     saveAltText, altText,
-                    SkipReview = AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText)
+                    SkipReview = AnalyzeImageProvider.showValidationDialog(ctx, keywords, title, caption, altText, photo)
 
                 if validationResult == "ok" then
                     log:trace("User confirmed AI results.")
+                elseif validationResult == "other" then
+                    -- Skip: write nothing to this photo, but keep the batch running.
+                    log:trace("User skipped AI results for " .. photoName .. ".")
+                    LrFileUtils.delete(path)
+                    return false, inputTokens, outputTokens, "skipped", "Skipped by user in validation dialog."
                 elseif validationResult == "cancel" then
                     return false, inputTokens, outputTokens, "canceled", "Canceled by user in validation dialog."
                 end
@@ -210,6 +215,7 @@ LrTasks.startAsyncTask(function()
 
         local totalPhotos = #selectedPhotos
         local totalFailed = 0
+        local totalSkipped = 0
         local errorMessages = {}
         local totalSuccess = 0
         local totalInputTokens = 0
@@ -227,7 +233,11 @@ LrTasks.startAsyncTask(function()
             if outputTokens ~= nil then
                 totalOutputTokens = totalOutputTokens + outputTokens
             end
-            if not success then
+            if not success and cause == "skipped" then
+                -- Skipped by the user in the review dialog: not an error, continue with next photo.
+                totalSkipped = totalSkipped + 1
+                log:trace("Skipped photo: " .. photo:getFormattedMetadata('fileName'))
+            elseif not success then
                 totalFailed = totalFailed + 1
                 errorMessages[photo:getFormattedMetadata('fileName')] = errorMessage
                 log:error("Unsuccessful photo analysis: " .. photo:getFormattedMetadata('fileName'))
@@ -256,7 +266,8 @@ LrTasks.startAsyncTask(function()
 
         progressScope:done()
         local stopTimeBatch = LrDate.currentTime()
-        log:trace("Analyzing " .. totalPhotos .. " with " .. prefs.ai .. " took " .. (stopTimeBatch - startTimeBatch) .. " seconds.")
+        log:trace("Analyzing " .. totalPhotos .. " with " .. prefs.ai .. " took " .. (stopTimeBatch - startTimeBatch) .. " seconds. "
+            .. "Success: " .. totalSuccess .. ", skipped: " .. totalSkipped .. ", failed: " .. totalFailed)
 
         if prefs.perfLogging and PerfLogFile ~= nil then
             PerfLogFile:close()

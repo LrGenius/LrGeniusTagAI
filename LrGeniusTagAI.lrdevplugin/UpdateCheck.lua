@@ -6,7 +6,8 @@ UpdateCheck.releaseTagName = "v" .. tostring(Info.MAJOR) .. "." .. tostring(Info
 UpdateCheck.updateCheckUrl = "https://api.github.com/repos/LrGenius/LrGeniusTagAI/releases/latest"
 UpdateCheck.latestReleaseUrl = "https://github.com/LrGenius/LrGeniusTagAI/releases/latest"
 
-function UpdateCheck.checkForNewVersion()
+-- silentIfCurrent: when true, no message is shown if the installed version is already the latest.
+function UpdateCheck.checkForNewVersion(silentIfCurrent)
     local response, headers = LrHttp.get(UpdateCheck.updateCheckUrl)
 
     if headers.status == 200 then
@@ -15,8 +16,10 @@ function UpdateCheck.checkForNewVersion()
             if decoded ~= nil then
                 if decoded.tag_name ~= UpdateCheck.releaseTagName then
                     LrHttp.openUrlInBrowser(UpdateCheck.latestReleaseUrl)
+                elseif not silentIfCurrent then
+                    LrDialogs.message(LOC "$$$/lrc-ai-assistant/UpdateCheck/onCurrentVersion=You're running the current version of LrGeniusTagAI", UpdateCheck.releaseTagName)
                 else
-                    LrDialogs.message("You're on the latest plugin version: " .. UpdateCheck.releaseTagName)
+                    log:trace("Update check: already on latest version " .. UpdateCheck.releaseTagName .. ", message suppressed.")
                 end
             end
         else
@@ -31,6 +34,6 @@ function UpdateCheck.checkForNewVersion()
     return nil
 end
 
-function UpdateCheck.checkForNewVersionInBackground()
-    return UpdateCheck.checkForNewVersion()
+function UpdateCheck.checkForNewVersionInBackground(silentIfCurrent)
+    return UpdateCheck.checkForNewVersion(silentIfCurrent)
 end

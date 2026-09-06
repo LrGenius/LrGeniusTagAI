@@ -1,3 +1,9 @@
+This is a Developement-Fork of a Lightroom Classic plugin that uses LLMs to generate tags and describe images. 
+
+**Please use https://github.com/LrGenius/LrGeniusTagAI for Downloads.**
+
+---
+
 # LrGeniusTagAI
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W7X2240HF4)
@@ -101,7 +107,7 @@ All settings live under **File → Plug-in Manager → LrGeniusTagAI**:
 
 | Provider   | Models                                              | Requires        |
 |------------|------------------------------------------------------|-----------------|
-| Gemini     | 2.5 Flash-Lite/Flash/Pro, 3.1/3.5 Flash-Lite/Flash/Pro| Google API key  |
+| Gemini     | 2.5 Flash-Lite/Flash/Pro, 3.1/3.5 Flash-Lite/Flash/Pro, 3.6/3.7/3.8 Flash | Google API key  |
 | ChatGPT    | 5.4 Nano/Mini, 5.4, 5.5                               | OpenAI API key  |
 | Ollama     | any locally installed vision model                    | Ollama running locally |
 | LM Studio  | any locally installed vision model                    | LM Studio running locally |
